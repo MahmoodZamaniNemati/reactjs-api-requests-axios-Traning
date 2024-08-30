@@ -1,23 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { useState } from 'react';
+import {ButtonCatFact} from './buttonCatFact';
+import axios from 'axios';
 function App() {
-  return (
+  const [catFactText,setCatFactText] = useState("");
+  const handelCatFactAPI = () => {
+    axios.get("https://catfact.ninja/fact/").then((res) =>{
+      setCatFactText(res.data.fact);
+    });
+  }
+  return ( 
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ButtonCatFact handelCatFactAPI={handelCatFactAPI} />
+      <h1>Cat Facts:</h1>
+      <p>{catFactText}</p>
     </div>
   );
 }
